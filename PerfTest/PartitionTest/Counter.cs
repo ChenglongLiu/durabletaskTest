@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Timers;
 
@@ -9,23 +10,21 @@ namespace PartitionTest
     {
         public static int ActivityNum;
         public static int OrchestrationNum;
-        private static DateTime StartTime;
         private static Timer ATimer;
+        private static readonly Stopwatch stopwatch = new Stopwatch();
 
         public static void Start()
         {
-            StartTime = DateTime.Now;
-
+            stopwatch.Start();
             ATimer = new Timer();
-
             ATimer.Elapsed += delegate
             {
                 DateTime b = DateTime.Now;
-                int senconds = (int)b.Subtract(StartTime).TotalSeconds;
+                long senconds = stopwatch.ElapsedMilliseconds / 1000;
 
                 if (senconds > 0)
                 {
-                    Console.WriteLine($"{senconds},{ActivityNum },{ActivityNum / senconds}");
+                    Console.WriteLine($"{senconds},{ActivityNum },qps = {(double)ActivityNum / senconds}");
                 }
             };
             ATimer.Interval = 5000;
