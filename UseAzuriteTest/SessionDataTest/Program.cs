@@ -56,6 +56,8 @@ namespace SessionDataTest
                     var customInstance = OrchestrationInstanceEx.Get(context.GetProperty<OrchestrationInstance>());
                     context.SetProperty<OrchestrationInstance>(customInstance);
                     
+                    //Dic data can't get here. But missed in HelloOrchestration context and ActivityDispatcherMiddleware
+                    
                     await next();
                 });
 
